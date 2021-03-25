@@ -10,7 +10,7 @@ class StartController extends Controller
 {
     public function index()
     {
-        
+
         $data = array();
         $data['styles'][] = $data['preload']['styles'][] = array(
             'link' => '/styles/' . $this->page['template'] . '/style.css',
@@ -39,6 +39,7 @@ class StartController extends Controller
 
         $ip = new \App\Libraries\IpWhois($this->page['lang']);
         $data['ip_data'] = $ip->getData();
+        //Viewer::debug($_SERVER['HTTP_USER_AGENT']);
         $this->viewer->setData($data);
         $this->viewer->renderHtml();
     }

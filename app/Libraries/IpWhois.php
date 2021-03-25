@@ -7,7 +7,8 @@ class IpWhois
 
     private $ip;
     private $lang;
-    private $data;
+    private $user_agent;
+    private $data = array();
 
     public function __construct(string $lang = 'en')
     {
@@ -16,9 +17,12 @@ class IpWhois
         if(!in_array($lang, $langs)){
             $lang = 'de';
         }
+        $this->user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        $this->ip = $_SERVER['REMOTE_ADDR'] ?? '';
         $this->lang = $lang;
-        $this->ip = $_SERVER['REMOTE_ADDR'];
         $this->getDataFromRemote();
+        $this->getHost();
+        $this->getUserAgent();
     }
 
     public function getIp(): string
@@ -39,11 +43,21 @@ class IpWhois
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $output = curl_exec($ch);
                 $output = json_decode($output, true);
-                $this->data = $output;
+                $this->data += $output;
                 curl_close($ch);
             } catch (\Exception $ex) {
                 $this->data['error'] = true;
             }
         }
+    }
+
+    private function getHost(): void
+    {
+        $this->data += array('host' => gethostbyaddr($this->ip));
+    }
+
+    private function getUserAgent(): void
+    {
+        $this->data += array('user_agent' => $this->user_agent);
     }
 }
