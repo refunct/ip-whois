@@ -40,6 +40,17 @@ body {
     height: 100%;
 }
 
+h2{
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+h3{
+    font-size: 18px;
+    color: #ffffff;
+}
+
 pre.debug {
     font-size: 14px;
     background: #ffffff;
@@ -215,4 +226,12 @@ a.main_footer_link {
     color: #ffffff;
     text-decoration: none;
     transition: 0.3s color;
+}
+
+div.sp_wrap_ip_info{
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    min-height: 100px;
+    padding: 40px 0px 40px 0px;
 }
